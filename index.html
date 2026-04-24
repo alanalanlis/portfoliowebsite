@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Twórca Wideo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --card-bg: rgba(255, 255, 255, 0.6);
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --accent-blue: #3b82f6;
+            --accent-blue-hover: #2563eb;
+            --gradient-blue: linear-gradient(135deg, #2563eb, #06b6d4);
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Tło - dekoracyjne "bloby" */
+        .bg-blobs {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        .blob {
+            position: absolute;
+            filter: blur(100px);
+            opacity: 0.5;
+            border-radius: 50%;
+            animation: float 15s infinite alternate ease-in-out;
+        }
+        .blob-1 { top: -20%; left: -10%; width: 60vw; height: 60vw; background: #bfdbfe; }
+        .blob-2 { bottom: -20%; right: -10%; width: 70vw; height: 70vw; background: #e0e7ff; animation-delay: -7s; }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(5%, 10%) scale(1.1); }
+        }
+
+        .container {
+            max-width: 1100px;
+            width: 100%;
+            padding: 5rem 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 7rem;
+        }
+
+        /* Sekcja O Mnie */
+        .about-section {
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .about-section h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            line-height: 1.1;
+            margin-bottom: 1rem;
+        }
+        .about-section h1 .accent {
+            background: var(--gradient-blue);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+        .about-section h2 {
+            font-size: clamp(1.2rem, 2vw, 1.5rem);
+            font-weight: 500;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+        .about-section p {
+            font-size: 1.125rem;
+            color: var(--text-main);
+            opacity: 0.9;
+        }
+
+        /* Siatka Filmów */
+        .video-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2.5rem;
+        }
+        @media (min-width: 768px) {
+            .video-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .video-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .video-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px -10px rgba(37, 99, 235, 0.15);
+        }
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* Proporcja 16:9 */
+            height: 0;
+            overflow: hidden;
+            background: #e2e8f0;
+        }
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .video-info {
+            padding: 1.5rem 1.5rem 2rem 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .video-info h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-main);
+        }
+        .video-info p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+        .video-info a {
+            display: inline-flex;
+            align-items: center;
+            color: var(--accent-blue);
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.2s;
+            align-self: flex-start;
+        }
+        .video-info a:hover {
+            color: var(--accent-blue-hover);
+        }
+        .video-info a svg {
+            margin-left: 0.4rem;
+            width: 16px;
+            height: 16px;
+            transition: transform 0.2s;
+        }
+        .video-info a:hover svg {
+            transform: translateX(3px);
+        }
+
+        /* Sekcja Kontakt */
+        .contact-section {
+            text-align: center;
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 32px;
+            padding: 4rem 2rem;
+            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+        .contact-section h2 {
+            font-size: clamp(2rem, 4vw, 2.5rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--text-main);
+            letter-spacing: -0.5px;
+        }
+        .contact-section p {
+            font-size: 1.125rem;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Przycisk kopiowania */
+        .copy-btn-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+        .btn {
+            background: var(--gradient-blue);
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            font-size: 1.05rem;
+            font-weight: 600;
+            border-radius: 9999px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 15px 0 rgba(37, 99, 235, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.7rem;
+            font-family: inherit;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
+        }
+        .btn:active {
+            transform: translateY(0);
+        }
+        .btn svg {
+            width: 18px;
+            height: 18px;
+        }
+        .feedback {
+            position: absolute;
+            top: calc(100% + 1rem);
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background: #10b981;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            white-space: nowrap;
+            box-shadow: 0 4px 10px rgba(16, 185, 129, 0.2);
+        }
+        .feedback::before {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: 50%;
+            transform: translateX(-50%) rotate(45deg);
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+        }
+        .feedback.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Klasy animacji */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: opacity, transform;
+        }
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Stagger dla wideo */
+        @media (min-width: 768px) {
+            .video-card:nth-child(2n) {
+                transition-delay: 0.15s;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+    </div>
+
+    <div class="container">
+        <!-- Sekcja O Mnie będzie renderowana tutaj -->
+        <header id="about" class="about-section animate-on-scroll"></header>
+
+        <!-- Sekcja z Wideo będzie renderowana tutaj -->
+        <main>
+            <section id="videos" class="video-grid"></section>
+        </main>
+
+        <!-- Sekcja Kontaktowa będzie renderowana tutaj -->
+        <footer id="contact" class="contact-section animate-on-scroll"></footer>
+    </div>
+
+    <script>
+        // ==========================================
+        // DANE STRONY (Łatwe do edycji w jednym miejscu)
+        // ==========================================
+        const portfolioData = {
+            about: {
+                firstName: "Kamil",
+                lastName: "Nowak",
+                role: "Twórca Treści Wideo & Montażysta",
+                description: "Zajmuję się tworzeniem dynamicznych, angażujących materiałów wideo do mediów społecznościowych (TikTok, Reels, Shorts). Przekształcam pomysły w wizualne historie, które przyciągają uwagę i budują zasięgi."
+            },
+            videos: [
+                {
+                    title: "Dynamiczny Vlog z Podróży",
+                    description: "Krótki, szybki montaż idealny na Instagram Reels, z użyciem dynamicznych przejść i dopasowanej muzyki.",
+                    source: "https://www.youtube.com/embed/dQw4w9WgXcQ?rel=0", 
+                    link: "https://youtube.com/watch?v=dQw4w9WgXcQ"
+                },
+                {
+                    title: "Recenzja Produktu Tech",
+                    description: "Profesjonalna recenzja sprzętu z estetycznymi przebitkami b-roll i czystym udźwiękowieniem.",
+                    source: "https://www.youtube.com/embed/jNQXAC9IVRw?rel=0",
+                    link: "https://youtube.com/watch?v=jNQXAC9IVRw"
+                },
+                {
+                    title: "Rolka Edukacyjna (Talking Head)",
+                    description: "Format ekspercki z nowoczesnymi napisami i efektami dźwiękowymi, zatrzymujący uwagę widza.",
+                    source: "https://www.youtube.com/embed/M7lc1UVf-VE?rel=0",
+                    link: "https://youtube.com/watch?v=M7lc1UVf-VE"
+                },
+                {
+                    title: "Relacja z Wydarzenia",
+                    description: "Filmowy klimat, color grading i świetnie zgrane ujęcia oddające energię eventu.",
+                    source: "https://www.youtube.com/embed/9bZkp7q19f0?rel=0",
+                    link: "https://youtube.com/watch?v=9bZkp7q19f0"
+                }
+            ],
+            contact: {
+                title: "Zróbmy coś niesamowitego!",
+                description: "Szukasz kogoś do nagrań, montażu lub kompleksowej obsługi wideo w social mediach? Odezwij się, a zrealizujemy Twoją wizję.",
+                email: "kontakt@twojadomena.pl",
+                buttonText: "Skopiuj adres e-mail"
+            }
+        };
+
+        // ==========================================
+        // RENDEROWANIE ZAWARTOŚCI Z DANYCH (JS)
+        // ==========================================
+        
+        // Renderowanie sekcji "O mnie"
+        const aboutEl = document.getElementById('about');
+        aboutEl.innerHTML = `
+            <h1>${portfolioData.about.firstName} <span class="accent">${portfolioData.about.lastName}</span></h1>
+            <h2>${portfolioData.about.role}</h2>
+            <p>${portfolioData.about.description}</p>
+        `;
+
+        // Renderowanie sekcji "Wideo"
+        const videosEl = document.getElementById('videos');
+        portfolioData.videos.forEach(video => {
+            const videoCard = document.createElement('article');
+            videoCard.className = 'video-card animate-on-scroll';
+            videoCard.innerHTML = `
+                <div class="video-wrapper">
+                    <iframe src="${video.source}" title="${video.title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+                </div>
+                <div class="video-info">
+                    <h3>${video.title}</h3>
+                    <p>${video.description}</p>
+                    <a href="${video.link}" target="_blank" rel="noopener noreferrer">
+                        Obejrzyj pełny materiał
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                        </svg>
+                    </a>
+                </div>
+            `;
+            videosEl.appendChild(videoCard);
+        });
+
+        // Renderowanie sekcji "Kontakt"
+        const contactEl = document.getElementById('contact');
+        contactEl.innerHTML = `
+            <h2>${portfolioData.contact.title}</h2>
+            <p>${portfolioData.contact.description}</p>
+            <div class="copy-btn-wrapper">
+                <button id="copy-email-btn" class="btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                    ${portfolioData.contact.buttonText}
+                </button>
+                <div id="copy-feedback" class="feedback">Skopiowano do schowka!</div>
+            </div>
+        `;
+
+        // ==========================================
+        // LOGIKA INTERAKCJI I ANIMACJI
+        // ==========================================
+
+        // Kopiowanie adresu email
+        document.getElementById('copy-email-btn').addEventListener('click', () => {
+            navigator.clipboard.writeText(portfolioData.contact.email).then(() => {
+                const feedback = document.getElementById('copy-feedback');
+                feedback.classList.add('show');
+                setTimeout(() => {
+                    feedback.classList.remove('show');
+                }, 2500);
+            }).catch(err => {
+                console.error('Błąd kopiowania do schowka: ', err);
+            });
+        });
+
+        // Intersection Observer - Animacje przy scrollowaniu
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    requestAnimationFrame(() => {
+                        entry.target.classList.add('visible');
+                    });
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // Obserwuj wszystkie elementy po wyrenderowaniu DOM
+        setTimeout(() => {
+            document.querySelectorAll('.animate-on-scroll').forEach(el => {
+                observer.observe(el);
+            });
+            // Ręcznie pokaż sekcję About (zawsze na samej górze)
+            const aboutSection = document.getElementById('about');
+            if(aboutSection) {
+                aboutSection.classList.add('visible');
+            }
+        }, 50);
+
+    </script>
+</body>
+</html>
