@@ -760,10 +760,10 @@
         stillsTitleEl.innerHTML = `<h2>${portfolioData.sectionTitles.stills}</h2>`;
 
         // Renderowanie text boxów w sekcji kadrów
-        document.getElementById('stills-text-1').textContent = portfolioData.stillsCaptions.text1;
-        document.getElementById('stills-text-2').textContent = portfolioData.stillsCaptions.text2;
-        document.getElementById('stills-text-3').textContent = portfolioData.stillsCaptions.text3;
-        document.getElementById('stills-text-4').textContent = portfolioData.stillsCaptions.text4;
+        document.getElementById('stills-text-1').innerHTML = portfolioData.stillsCaptions.text1;
+        document.getElementById('stills-text-2').innerHTML = portfolioData.stillsCaptions.text2;
+        document.getElementById('stills-text-3').innerHTML = portfolioData.stillsCaptions.text3;
+        document.getElementById('stills-text-4').innerHTML = portfolioData.stillsCaptions.text4;
 
         // Renderowanie boxu tytułowego sekcji wideo
         const videosTitleEl = document.getElementById('videos-title');
