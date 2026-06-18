@@ -415,17 +415,25 @@
             border-radius: 14px;
             box-shadow: 0 6px 20px -6px rgba(0, 0, 0, 0.05);
         }
+
         .photo-row-captioned {
             display: flex;
             gap: 1.25rem;
         }
+
         .photo-col {
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
         }
-        .photo-col.portrait  { flex: 2; }
-        .photo-col.landscape { flex: 3; }
+
+        .photo-col.portrait {
+            flex: 2;
+        }
+
+        .photo-col.landscape {
+            flex: 3;
+        }
 
         /* Sekcja kadrów (stills) — natural aspect ratios, stacked */
         .stills-section {
@@ -434,7 +442,35 @@
             gap: 1.25rem;
         }
 
-        /* Still items — 21:9 crop, no white bars */
+        /* 2-column grid for stills */
+        .stills-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
+        }
+
+        @media (max-width: 600px) {
+            .stills-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Empty text box for stills section */
+        .stills-text-box {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            padding: 1.5rem 2.5rem;
+            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            min-height: 60px;
+        }
+
+        /* Still items — 16:9 crop */
         .still-item {
             border-radius: 18px;
             overflow: hidden;
@@ -442,7 +478,7 @@
             border: 1px solid rgba(255, 255, 255, 0.8);
             transition: transform 0.35s ease, box-shadow 0.35s ease;
             position: relative;
-            aspect-ratio: 21 / 9;
+            aspect-ratio: 16 / 9;
             background: #e8eef4;
         }
 
@@ -453,7 +489,7 @@
 
         .still-item img {
             width: 100%;
-            height: 130%;
+            height: 115%;
             /* oversize so parallax shift never reveals edges */
             object-fit: cover;
             object-position: center;
@@ -518,8 +554,8 @@
     </div>
 
     <div class="container">
-        <!-- Sekcja O Mnie będzie renderowana tutaj -->
-        <header id="about" class="about-section animate-on-scroll"></header>
+        <!-- Tytuł: Imię i rola -->
+        <header id="about-title" class="about-section animate-on-scroll"></header>
 
         <!-- Siatka Zdjęć -->
         <section id="photos" class="photo-grid animate-on-scroll">
@@ -555,22 +591,76 @@
             </div>
         </section>
 
+        <!-- Sekcja O Mnie — opis -->
+        <section id="about" class="about-section animate-on-scroll"></section>
+
         <!-- Sekcja Kadrów (Stills) — tytuł + zdjęcia -->
         <section id="stills" class="stills-section animate-on-scroll">
             <!-- Box: "Wybrane kadry z moich produkcji" -->
             <div id="stills-title" class="section-title-box"></div>
 
-            <div class="still-item">
-                <img src="https://raw.githubusercontent.com/alanalanlis/portfoliowebsite/main/still1.jpg" alt="Still 1"
-                    loading="lazy">
+            <!-- Text box 1 — nad stillami 3+4 -->
+            <div id="stills-text-1" class="stills-text-box"></div>
+
+            <!-- Grupa 1: Still 3 + 4 -->
+            <div class="stills-grid">
+                <div class="still-item">
+                    <img src="https://raw.githubusercontent.com/alanalanlis/portfoliowebsite/main/Still3.png" alt="Still 3" loading="lazy">
+                </div>
+                <div class="still-item">
+                    <img src="https://raw.githubusercontent.com/alanalanlis/portfoliowebsite/main/Still4.png" alt="Still 4" loading="lazy">
+                </div>
             </div>
-            <div class="still-item">
-                <img src="https://raw.githubusercontent.com/alanalanlis/portfoliowebsite/main/still2.jpg" alt="Still 2"
-                    loading="lazy">
+
+            <!-- Text box 2 — między stillami 4 i 1 -->
+            <div id="stills-text-2" class="stills-text-box"></div>
+
+            <!-- Grupa 2: Still 1 + 2 -->
+            <div class="stills-grid">
+                <div class="still-item">
+                    <img src="https://raw.githubusercontent.com/alanalanlis/portfoliowebsite/main/still1.jpg" alt="Still 1" loading="lazy">
+                </div>
+                <div class="still-item">
+                    <img src="https://raw.githubusercontent.com/alanalanlis/portfoliowebsite/main/still2.jpg" alt="Still 2" loading="lazy">
+                </div>
             </div>
-            <div class="still-item">
-                <img src="https://raw.githubusercontent.com/alanalanlis/portfoliowebsite/main/still3.jpg" alt="Still 3"
-                    loading="lazy">
+
+            <!-- Text box 3 — między stillami 2 i 5 -->
+            <div id="stills-text-3" class="stills-text-box"></div>
+
+            <!-- Grupa 3: Still 5, 6, 7, 8 -->
+            <div class="stills-grid">
+                <div class="still-item">
+                    <img src="https://raw.githubusercontent.com/alanalanlis/portfoliowebsite/main/Still5.jpg" alt="Still 5" loading="lazy">
+                </div>
+                <div class="still-item">
+                    <img src="https://raw.githubusercontent.com/alanalanlis/portfoliowebsite/main/Still6.jpg" alt="Still 6" loading="lazy">
+                </div>
+                <div class="still-item">
+                    <img src="https://raw.githubusercontent.com/alanalanlis/portfoliowebsite/main/Still7.jpg" alt="Still 7" loading="lazy">
+                </div>
+                <div class="still-item">
+                    <img src="https://raw.githubusercontent.com/alanalanlis/portfoliowebsite/main/Still8.jpg" alt="Still 8" loading="lazy">
+                </div>
+            </div>
+
+            <!-- Text box 4 — między stillami 8 i 9 -->
+            <div id="stills-text-4" class="stills-text-box"></div>
+
+            <!-- Grupa 4: Still 9, 10, 11, 12 -->
+            <div class="stills-grid">
+                <div class="still-item">
+                    <img src="https://raw.githubusercontent.com/alanalanlis/portfoliowebsite/main/Still9.jpg" alt="Still 9" loading="lazy">
+                </div>
+                <div class="still-item">
+                    <img src="https://raw.githubusercontent.com/alanalanlis/portfoliowebsite/main/Still10.jpg" alt="Still 10" loading="lazy">
+                </div>
+                <div class="still-item">
+                    <img src="https://raw.githubusercontent.com/alanalanlis/portfoliowebsite/main/Still11.jpg" alt="Still 11" loading="lazy">
+                </div>
+                <div class="still-item">
+                    <img src="https://raw.githubusercontent.com/alanalanlis/portfoliowebsite/main/Still12.jpg" alt="Still 12" loading="lazy">
+                </div>
             </div>
         </section>
 
@@ -601,9 +691,15 @@
                 videos: "Moje dotychczasowe <span class='accent'>realizacje</span>"
             },
             photoCaptions: {
-                row1: "Doświadczenie w obsłudze gimbala różnymi kamerami",
+                row1: "Doświadczenie w obsłudze gimbala z różnymi kamerami",
                 photo1: "Znajomość nowoczesnego sprzętu i rozwiązań technicznych",
                 photo4: "Praca w zespole, w roli autora zdjęć — pełna swoboda twórcza, ale i odpowiedzialność"
+            },
+            stillsCaptions: {
+                text1: "Short film \"Opus Solaris\" 1 miejsce w konkursie \"Nakręć Się\" 2025 reż. Jakub Banasik, Yurii Boiko",
+                text2: "Short film \"W Czepcu Urodzony\" zaprezentowany na festiwalu Młodzi i Film w Koszalinie reż. Aleksandra Kochanek, Hanna Wowerka",
+                text3: "Projekt własny - pasja MTB",
+                text4: "Cykl filmów reklamowych dla Uniwersytetu WSB Merito w Gdańsku"
             },
             videos: [
                 {
@@ -619,16 +715,10 @@
                     link: "https://www.youtube.com/watch?v=M0xwlaqv_dc"
                 },
                 {
-                    title: "Rolka Edukacyjna (Talking Head)",
-                    description: "Format ekspercki z nowoczesnymi napisami i efektami dźwiękowymi, zatrzymujący uwagę widza.",
-                    source: "https://www.youtube.com/embed/M7lc1UVf-VE?rel=0",
-                    link: "https://youtube.com/watch?v=M7lc1UVf-VE"
-                },
-                {
-                    title: "Relacja z Wydarzenia",
-                    description: "Filmowy klimat, color grading i świetnie zgrane ujęcia oddające energię eventu.",
-                    source: "https://www.youtube.com/embed/9bZkp7q19f0?rel=0",
-                    link: "https://youtube.com/watch?v=9bZkp7q19f0"
+                    title: "Krótki film reklamowy dla Uniwersytetu WSB Merito",
+                    description: "Format alking head - wypowiedź eksperta z przebitkami w tle",
+                    source: "https://www.youtube.com/embed/YhvyoXnfgew?rel=0",
+                    link: "https://www.youtube.com/watch?v=YhvyoXnfgew"
                 }
             ],
             contact: {
@@ -643,13 +733,18 @@
         // RENDEROWANIE ZAWARTOŚCI Z DANYCH (JS)
         // ==========================================
 
-        // Renderowanie sekcji "O mnie"
-        const aboutEl = document.getElementById('about');
-        aboutEl.innerHTML = `
+        // Renderowanie tytułu (imię + rola) — nad zdjęciami
+        const aboutTitleEl = document.getElementById('about-title');
+        aboutTitleEl.innerHTML = `
             <div class="about-card">
                 <h1>${portfolioData.about.firstName} <span class="accent">${portfolioData.about.lastName}</span></h1>
                 <h2>${portfolioData.about.role}</h2>
             </div>
+        `;
+
+        // Renderowanie opisu — pod zdjęciami
+        const aboutEl = document.getElementById('about');
+        aboutEl.innerHTML = `
             <div class="about-card">
                 <p>${portfolioData.about.description}</p>
             </div>
@@ -663,6 +758,12 @@
         // Renderowanie boxu tytułowego sekcji kadrów
         const stillsTitleEl = document.getElementById('stills-title');
         stillsTitleEl.innerHTML = `<h2>${portfolioData.sectionTitles.stills}</h2>`;
+
+        // Renderowanie text boxów w sekcji kadrów
+        document.getElementById('stills-text-1').textContent = portfolioData.stillsCaptions.text1;
+        document.getElementById('stills-text-2').textContent = portfolioData.stillsCaptions.text2;
+        document.getElementById('stills-text-3').textContent = portfolioData.stillsCaptions.text3;
+        document.getElementById('stills-text-4').textContent = portfolioData.stillsCaptions.text4;
 
         // Renderowanie boxu tytułowego sekcji wideo
         const videosTitleEl = document.getElementById('videos-title');
@@ -751,7 +852,7 @@
                 const rect = el.getBoundingClientRect();
                 const alreadyVisible = rect.top < window.innerHeight && rect.bottom > 0;
 
-                if (el.id === 'about' || alreadyVisible) {
+                if (el.id === 'about-title' || el.id === 'about' || el.id === 'photos' || alreadyVisible) {
                     // Elementy widoczne przy załadowaniu strony – pokaż od razu bez animacji
                     el.style.transition = 'none';
                     el.classList.add('visible');
